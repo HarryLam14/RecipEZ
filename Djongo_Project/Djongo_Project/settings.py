@@ -75,8 +75,11 @@ WSGI_APPLICATION = 'Djongo_Project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'djongo',
+        'NAME': 'Recipes',
+        'HOST': 'mongodb+srv://Harry:h8gIfFHBo7cpljxD@cluster0.85por.mongodb.net/Recipes',
+        'USER': 'Harry',
+        'PASSWORD': 'h8gIfFHBo7cpljxD',
     }
 }
 

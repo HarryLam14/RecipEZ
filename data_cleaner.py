@@ -4,9 +4,13 @@ import pandas as pd
 interaction = pd.read_csv("RAW_interactions.csv")
 recipes = pd.read_csv("RAW_recipes.csv")
 
-# Removes unwated columns
+# Removes unwanted columns
 interaction.drop(["review","user_id","date"], axis=1, inplace=True)
 recipes.drop(["contributor_id","submitted","tags","n_steps","n_ingredients"], axis=1, inplace=True)
+
+# Strip quotes from ingredient lists
+recipes['ingredients'] = recipes['ingredients'].map(lambda x: x.strip('"'))
+
 
 # Find average rating of each recipe
 ratings = interaction.groupby("recipe_id").sum() / interaction.groupby("recipe_id").count()

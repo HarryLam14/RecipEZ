@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Recipes list{% endblock %}
+
+{% block body %}
+    <h1>Welcome to Recipes list</h1>
+    <table>
+        {% for recipe in recipes %}
+            <tr>
+                <td colspan="3">
+                    {{ recipe.recipe_name }}
+                </td>
+            </tr>
+            {% for ingredient in recipe.ingredient_set.all %}
+                <tr>
+                    <td>---</td>
+                    <td>
+                        {{ ingredient.ingredient_name}}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </table>{% endblock %}

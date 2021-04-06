@@ -33,8 +33,6 @@ ing_split = pd.DataFrame(preprocessed_data.ingredients.values.tolist()).add_pref
 preprocessed_data.drop(["ingredients"], axis=1, inplace=True)
 preprocessed_data = preprocessed_data.join(ing_split)
 
-print(preprocessed_data.head())
-
 # Creates new json and saves cleaned data to it;
 # indent prettifies the data, orient changes the notation of the data
 # (values for orient='split', 'records', 'index', 'columns', 'values', 'table')

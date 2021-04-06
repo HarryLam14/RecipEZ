@@ -29,17 +29,22 @@ preprocessed_data.ingredients = preprocessed_data.ingredients.apply(literal_eval
 ingredients = pd.DataFrame(preprocessed_data.ingredients.explode().unique()).reset_index()
 
 # Split ingredients up and drop ingredients column (list type is messy and difficult to use)
-ing_split = pd.DataFrame(preprocessed_data.ingredients.values.tolist()).add_prefix('ing_')
-preprocessed_data.drop(["ingredients"], axis=1, inplace=True)
-preprocessed_data = preprocessed_data.join(ing_split)
+ing_split = pd.DataFrame(preprocessed_data.ingredients.values.tolist()).add_prefix('ingredient_')
 
-# Remove large recipes for computational purposes
-for i in range(42,9,-1):
-    preprocessed_data = preprocessed_data[preprocessed_data['ing_'+ str(i)].isnull()]
-    preprocessed_data.drop(['ing_'+ str(i)], axis=1, inplace=True)
+# Create mapping of ingredients to recipes
+i = 0
+while 'ingredient_' + str(i) in ing_split:
+    if i == 0:
+        ingredients_map = pd.concat([ing_split['ingredient_' + str(i)], preprocessed_data['name']], axis=1)
+    else:
+        pd.concat([ingredients_map, pd.concat([ing_split['ingredient_' + str(i)], preprocessed_data['name']], axis=1)], axis=0 )
+    i += 1
+ingredients_map.reset_index()
+ingredients_map.columns = ['ingredient', 'recipe']
 
 # Creates new json and saves cleaned data to it;
 # indent prettifies the data, orient changes the notation of the data
 # (values for orient='split', 'records', 'index', 'columns', 'values', 'table')
 preprocessed_data.to_json("CLEANED_JOINED_data.json", orient='index', indent=4)
 ingredients.to_json("all_ingredients.json", orient='index', indent=4)
+ingredients_map.to_json("ingredients_map.json", orient='index', indent=4)

@@ -1,27 +1,6 @@
 {% load static %}
-
+{% extends "base.html" %}
 <html>
-    <header>
-        <title>RecipEZ - {% block title %}{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'pages/main.css' %}">
-        {% block extra_header_contents %}{% endblock %}
-    </header>
-    <body>
-        <div id="menu">
-            <p>Menu:</p>
-            <ul>
-                <li><a href="/">Home</a></li>
-            </ul>
-        </div>
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                        {{ message }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
         {% block body %}
         {% endblock %}
     </body>

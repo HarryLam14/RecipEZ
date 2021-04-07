@@ -2,7 +2,7 @@
 
 {% block title %}Recipes list{% endblock %}
 
-{% block body %}
+{% block content %}
     <h1>Welcome to Recipes list</h1>
     <table>
         {% for recipe in recipes %}
@@ -20,4 +20,5 @@
                 </tr>
             {% endfor %}
         {% endfor %}
-    </table>{% endblock %}
+    </table>
+{% endblock %}

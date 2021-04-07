@@ -19,19 +19,6 @@ def recipes_list(request):
     }
     return render(request, 'recipes.html', context)
 
-# class ListBooksForAuthor(APIView):
-#     def get(self, request, format=None):
-#         ingredient_id = request.GET.get('ingredient_id')
-#         get_object_or_404(Ingredient, pk=ingredient_id)
-
-#         recipes = [
-#             {
-#                 'recipe_name': recipe.recipe_name,
-#                 'steps': recipe.steps
-#             }
-#             for recipe in Recipe.objects.filter(ingredient_id=ingredient_id)
-#         ]
-#         return Response(books)
 
 def index(request):
     recipe = Recipe.objects.filter(ingredients__name__in=['cooked sweet potato','tart cooking apple', 'cola', 'kiwi fruits', 'salt'])

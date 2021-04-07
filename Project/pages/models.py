@@ -2,15 +2,26 @@ from django.db import models
 
 
 # Create your models here.
-class Recipe(models.Model):
-    recipe_id = models.IntegerField(primary_key=True)
-    recipe_name = models.CharField(max_length = 200)
-    steps = models.CharField(max_length = 200)
-
 class Ingredient(models.Model):
-    ingredient_id = models.IntegerField(primary_key=True)
-    ingredient_name = models.CharField(max_length = 200)
-    recipes = models.ManyToManyField(Recipe)
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length = 255)
+
+    def __str__(self):
+        return self.name
+
+class Recipe(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length = 255)
+    description = models.CharField(max_length=255)
+    minutes = models.IntegerField()
+    ingredients = models.ManyToManyField(Ingredient)
+    steps = models.JSONField()
+    nutrition = models.JSONField(blank=True, null=True)
+    rating = models.IntegerField()
+    n_ratings = models.IntegerField()
+
+    def __str__(self):
+        return self.name
 
 # class UserIngredients(models.Model):
 

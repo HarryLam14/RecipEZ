@@ -3,6 +3,8 @@ from django.shortcuts import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.http import HttpResponse
+import collections
 
 # Create your views here.
 from .models import Recipe, Ingredient
@@ -30,3 +32,12 @@ def recipes_list(request):
 #             for recipe in Recipe.objects.filter(ingredient_id=ingredient_id)
 #         ]
 #         return Response(books)
+
+def index(request):
+    recipe = Recipe.objects.filter(ingredients__name__in=['cooked sweet potato','tart cooking apple', 'cola', 'kiwi fruits', 'salt'])
+    counts = collections.Counter(recipe)
+    ordered = sorted(recipe, key=lambda x: (counts[x], x), reverse=True)
+    results = list(dict.fromkeys(ordered))
+
+    return HttpResponse('\n'.join(str(results)))
+

@@ -42,7 +42,7 @@ def recipes_list(request):
 
 @api_view(['GET'])
 def search(request):
-    query = [request.query_params.get('ingredients')]
+    query = [request.query_params.getlist('ingredients')]
     recipes = Recipe.objects.filter(ingredients__name__in=query).annotate(recipe_count=Count('name')).order_by('-recipe_count').values('name', 'rating')[:50]
 
     return HttpResponse((recipes))

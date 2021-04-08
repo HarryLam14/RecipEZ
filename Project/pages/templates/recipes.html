@@ -8,7 +8,7 @@
         {% for recipe in page_obj %}
             <tr>
                 <td colspan="3">
-                    <strong>{{ recipe.name }}<br></strong>
+                    <strong>{{ recipe.name|title }}<br></strong>
                     {{ recipe.description }}
                 </td>
             </tr>

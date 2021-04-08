@@ -3,22 +3,37 @@
 {% block title %}Recipes list{% endblock %}
 
 {% block content %}
-    <h1>Welcome to Recipes list</h1>
+    <h1>Our Recipes</h1>
     <table>
-        {% for recipe in recipes %}
+        {% for recipe in page_obj %}
             <tr>
                 <td colspan="3">
-                    {{ recipe.recipe_name }}
+                    <strong>{{ recipe.name }}<br></strong>
+                    {{ recipe.description }}
                 </td>
             </tr>
-            {% for ingredient in recipe.ingredient_set.all %}
                 <tr>
-                    <td>---</td>
                     <td>
-                        {{ ingredient.ingredient_name}}
+                        {{ context }}
                     </td>
                 </tr>
-            {% endfor %}
         {% endfor %}
     </table>
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 {% endblock %}

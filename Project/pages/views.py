@@ -39,3 +39,9 @@ def search(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     return render(request, 'search.html', {'page_obj': page_obj, 'ingredients': query2, 'found': found_recipes})
+
+@api_view(['GET'])
+def find_one(request):
+    query = request.query_params.get('recipe') # Name of recipe
+    recipe = Recipe.objects.get(id=query)
+    return render(request, 'recipe.html', {'recipe': recipe}) # Need to create new file recipe.html

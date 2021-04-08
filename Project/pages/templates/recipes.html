@@ -8,7 +8,7 @@
         {% for recipe in page_obj %}
             <tr>
                 <td colspan="3">
-                    <strong>{{ recipe.name|title }}<br></strong>
+                    <strong><a href="./recipe?recipe={{ recipe.id }}">{{ recipe.name|title }}<br></strong></a>
                     {{ recipe.description }}
                 </td>
             </tr>

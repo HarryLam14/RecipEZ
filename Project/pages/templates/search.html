@@ -9,7 +9,7 @@
             {% for recipe in page_obj %}
                 <tr>
                     <td colspan="3">
-                        <strong>{{ recipe.name|title }}<br></strong>
+                        <a href="./recipe?recipe={{ recipe.id }}">{{ recipe.name|title }}</a><br>
                         {{ recipe.description|capfirst }}
                     </td>
                     <td colspan="2">
@@ -35,7 +35,7 @@
                 Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
             </span>
     
-            {% if page_obj.has_next %} <!--NEED TO ADD &ingredients= for each ingredient-->
+            {% if page_obj.has_next %}
                 <a href="?{{ ingredients }}&page={{ page_obj.next_page_number }}">next</a>
                 <a href="?{{ ingredients }}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
             {% endif %}

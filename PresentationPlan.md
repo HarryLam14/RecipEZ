@@ -16,7 +16,8 @@ Plan for Presentation:
     - One recipe ☝️
 
 5. Learning points, how to continue works, etc.
-    - auto complete ingredients 
+    - auto complete ingredients
+    - change recipe ratings to show as floats
     - allowing user to add ingredients
     - allowing user to add recipes
     - Django does lots of things for you, but have to know about them

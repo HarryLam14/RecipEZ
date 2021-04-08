@@ -25,12 +25,27 @@ def recipes_list(request):
     return render(request, 'recipes.html', context)
 
 
-#def index(request):
-#    recipe = Recipe.objects.filter(ingredients__name__in=['cooked sweet potato','tart cooking apple', 'cola', 'kiwi fruits', 'salt'])
-#    counts = collections.Counter(recipe)
-#    ordered = sorted(recipe, key=lambda x: (counts[x], x), reverse=True)
-#    results = list(dict.fromkeys(ordered))
-#    return HttpResponse('\n'.join(str(results)))
+# def index(request):
+#     query = ["granulated sugar",
+#             "shortening",
+#             "eggs",
+#             "flour",
+#             "cream of tartar",
+#             "baking soda",
+#             "vanilla extract"]
+#     recipes = Recipe.objects.filter(ingredients__name__in=query).annotate(recipe_count=Count('name')).order_by('-recipe_count').values('name', 'rating')[:50]
+    # counts = collections.Counter(recipes)
+    # ordered = sorted(recipes, key=lambda x: (counts[x], x), reverse=True)
+    # results = list(dict.fromkeys(ordered))
+# 
+    # return HttpResponse('\n'.join(str(recipes)))
+
+@api_view(['GET'])
+def search(request):
+    query = [request.query_params.get('ingredients')]
+    recipes = Recipe.objects.filter(ingredients__name__in=query).annotate(recipe_count=Count('name')).order_by('-recipe_count').values('name', 'rating')[:50]
+
+    return HttpResponse((recipes))
 
 @api_view(['POST'])
 def search(request):

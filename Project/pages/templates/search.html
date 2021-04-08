@@ -10,10 +10,13 @@
                 <tr>
                     <td colspan="3">
                         <strong>{{ recipe.name|title }}<br></strong>
-                        {{ recipe.description }}
+                        {{ recipe.description|capfirst }}
                     </td>
-                    <td>
-                        {{ recipe.rating }}
+                    <td colspan="2">
+                        <b>{{ recipe.rating }} stars</b>
+                    </td>
+                    <td colspan="2">
+                        ({{ recipe.n_ratings }} ratings)
                     </td>
                 </tr>
             {% endfor %}

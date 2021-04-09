@@ -20,10 +20,3 @@ class Recipe(models.Model):
 
     def __str__(self):
         return self.name
-
-# class UserIngredients(models.Model):
-
-
-# class Join(models.Model):
-#     recipe_id = models.ForeignKey()
-#     ingredient_id = models.ForeignKey()

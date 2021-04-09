@@ -18,11 +18,26 @@
             </tr>
             <tr>
                 <td>
+                    <b>Nutrition info: </b>{{ recipe.nutrition|join:", " }}
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <b>Ingredients: </b>{{ recipe.ingredients.all|join:", " }}
                 </td>
             </tr>
             <tr>
                 <td><b>Steps: </b><br>{{ recipe.steps|join:"<br>" }}</td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Rating: </b> {{ recipe.rating }} stars
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>No. of ratings: </b> {{ recipe.n_ratings }} ratings
+                </td>
             </tr>
     </table>
 {% endblock %}

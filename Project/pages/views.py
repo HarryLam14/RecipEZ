@@ -17,31 +17,32 @@ from .models import Recipe, Ingredient
 def index(request):
     return render(request, 'index.html')
 
+@api_view(['GET'])
 def recipes_list(request):
-    recipes = Recipe.objects.all()
-    disp_items =  10 # request.GET.get('items') could be useful instead
-    paginator = Paginator(recipes, disp_items)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'recipes.html', {'page_obj': page_obj})
+    recipes = list(Recipe.objects.all().values()[:100])
+    # disp_items =  10 # request.GET.get('items') could be useful instead
+    # paginator = Paginator(recipes, disp_items)
+    # page_number = request.GET.get('page')
+    # page_obj = paginator.get_page(page_number)
+    return JsonResponse(recipes, safe=False)
 
 @api_view(['GET'])
 def search(request):
     query = request.query_params.getlist('ingredients')
-    recipes = Recipe.objects.filter(ingredients__name__in=query).annotate(recipe_count=Count('name')).order_by('-recipe_count', '-rating', '-n_ratings')[:100]
-    found_recipes = recipes.count() != 0
-    query2 = ''
-    for ingredient in query:
-        query2 += 'ingredients=' + ingredient + '&'
-    query2 = query2[:-1]
-    disp_items =  10 # request.GET.get('items') could be useful instead
-    paginator = Paginator(recipes, disp_items)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'search.html', {'page_obj': page_obj, 'ingredients': query2, 'found': found_recipes})
+    recipes = list(Recipe.objects.filter(ingredients__name__in=query).annotate(recipe_count=Count('name')).order_by('-recipe_count', '-rating', '-n_ratings').values()[:100])
+    # found_recipes = recipes.count() != 0
+    # query2 = ''
+    # for ingredient in query:
+    #     query2 += 'ingredients=' + ingredient + '&'
+    # query2 = query2[:-1]
+    # disp_items =  10 # request.GET.get('items') could be useful instead
+    # paginator = Paginator(recipes, disp_items)
+    # page_number = request.GET.get('page')
+    # page_obj = paginator.get_page(page_number)
+    return JsonResponse(recipes, safe=False)
 
 @api_view(['GET'])
 def find_one(request):
     query = request.query_params.get('recipe') # Name of recipe
-    recipe = Recipe.objects.get(id=query)
-    return render(request, 'recipe.html', {'recipe': recipe}) # Need to create new file recipe.html
+    recipe = list(Recipe.objects.filter(id=query).values())
+    return JsonResponse(recipe, safe=False) # Need to create new file recipe.html
